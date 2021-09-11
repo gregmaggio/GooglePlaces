@@ -1,0 +1,7 @@
+/target/
+secure.properties
+secure.json
+.classpath
+.project
+.settings/
+

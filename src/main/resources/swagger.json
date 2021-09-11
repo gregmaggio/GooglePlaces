@@ -1,0 +1,146 @@
+{
+	"swagger" : "2.0",
+	"info" : {
+		"description" : "Google Places API",
+		"version" : "1.0",
+		"title" : "Google Places Service",
+		"license" : {
+			"name" : "Apache License Version 2.0"
+		}
+	},
+	"host" : "{{host}}",
+	"basePath" : "/GooglePlaces",
+	"tags" : [{
+			"name" : "googleplaces-controller",
+			"description" : "Google Places Controller"
+		}
+	],
+	"paths" : {
+		"/api/autoComplete/{searchText}" : {
+			"get" : {
+				"tags" : ["googleplaces-controller"],
+				"summary" : "Auto Complete",
+				"operationId" : "autoComplete",
+				"consumes" : ["application/json"],
+				"produces" : ["*/*"],
+				"parameters" : [{
+						"name" : "searchText",
+						"in" : "path",
+						"description" : "search text",
+						"required" : true,
+						"type" : "string"
+					}
+				],
+				"responses" : {
+					"200" : {
+						"description" : "OK",
+						"schema" : {
+							"type" : "array",
+							"items" : {
+								"$ref" : "#/definitions/PredictionDTO"
+							}
+						}
+					},
+					"401" : {
+						"description" : "Unauthorized"
+					},
+					"403" : {
+						"description" : "Forbidden"
+					},
+					"404" : {
+						"description" : "Not Found"
+					}
+				}
+			}
+		},
+		"/api/place/{placeId}" : {
+			"get" : {
+				"tags" : ["googleplaces-controller"],
+				"summary" : "Place",
+				"operationId" : "place",
+				"consumes" : ["application/json"],
+				"produces" : ["*/*"],
+				"parameters" : [{
+						"name" : "placeId",
+						"in" : "path",
+						"description" : "place identifier",
+						"required" : true,
+						"type" : "string"
+					}
+				],
+				"responses" : {
+					"200" : {
+						"description" : "OK",
+						"schema" : {
+							"$ref" : "#/definitions/PlaceDTO"
+						}
+					},
+					"401" : {
+						"description" : "Unauthorized"
+					},
+					"403" : {
+						"description" : "Forbidden"
+					},
+					"404" : {
+						"description" : "Not Found"
+					}
+				}
+			}
+		}
+	},
+	"definitions" : {
+		"PredictionDTO" : {
+			"type" : "object",
+			"properties" : {
+				"placeId" : {
+					"type" : "string"
+				},
+				"description" : {
+					"type" : "string"
+				}
+			}
+		},
+		"AddressComponentDTO" : {
+			"type" : "object",
+			"properties" : {
+				"longName" : {
+					"type" : "string"
+				},
+				"shortName" : {
+					"type" : "string"
+				},
+				"types" : {
+					"type" : "array",
+					"items" : {
+						"type" : "string"
+					}
+				}
+			}
+		},
+		"PlaceDTO" : {
+			"type" : "object",
+			"properties" : {
+				"placeId" : {
+					"type" : "string"
+				},
+				"name" : {
+					"type" : "string"
+				},
+				"latitude" : {
+					"type" : "number",
+					"format" : "double"
+				},
+				"latitude" : {
+					"type" : "number",
+					"format" : "double"
+				},
+				"addressComponents" : {
+					"type" : "array",
+					"items" : {
+						"$ref" : "#/definitions/AddressComponentDTO"
+					}
+				}
+			}
+		}
+	}
+}

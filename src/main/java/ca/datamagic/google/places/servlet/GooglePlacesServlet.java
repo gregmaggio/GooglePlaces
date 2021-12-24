@@ -29,7 +29,7 @@ public class GooglePlacesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = LogManager.getLogger(GooglePlacesServlet.class);
 	private static final Pattern autoCompletePredictionsPattern = Pattern.compile("/autoComplete/(?<searchText>\\w+)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern placePattern = Pattern.compile("/place/(?<placeId>\\w+)", Pattern.CASE_INSENSITIVE);
+	private static final Pattern placePattern = Pattern.compile("/place/(?<placeId>(\\w|\\x2D|\\x2B)+)", Pattern.CASE_INSENSITIVE);
 	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -42,7 +42,6 @@ public class GooglePlacesServlet extends HttpServlet {
 				String searchText = autoCompletePredictionsMatcher.group("searchText");
 				logger.debug("searchText: " + searchText);
 				List<PredictionDTO> predictions = GooglePlacesContextListener.getDAO().loadAutoCompletePredictions(searchText);
-				//GooglePlacesContextListener.getDAO().loadPlace(placeId)
 				String json = (new Gson()).toJson(predictions);
 				response.setContentType("application/json");
 				response.getWriter().println(json);

@@ -34,4 +34,16 @@ public class GooglePlacesDAOTester extends BaseTester {
 		PlaceDTO place = getDAO().loadPlace(prediction.getPlaceId());
 		logger.debug("place: " + gson.toJson(place));
 	}
+	
+	@Test
+	public void test2() throws Exception {
+		List<PredictionDTO> predictions = getDAO().loadAutoCompletePredictions("MIA");
+		Assert.assertNotNull(predictions);
+		Gson gson = new Gson();
+		logger.debug("predictions: " + gson.toJson(predictions));
+		Assert.assertFalse(predictions.size() == 0);
+		PredictionDTO prediction = predictions.get(0);
+		PlaceDTO place = getDAO().loadPlace(prediction.getPlaceId());
+		logger.debug("place: " + gson.toJson(place));
+	}
 }
